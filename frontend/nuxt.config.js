@@ -1,7 +1,6 @@
 export default {
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'frontend',
+    title: 'Troov Test',
     htmlAttrs: {
       lang: 'en'
     },
@@ -16,28 +15,32 @@ export default {
     ]
   },
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    'bootstrap/dist/css/bootstrap.css',
+    'bootstrap-vue/dist/bootstrap-vue.css'
   ],
 
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
   ],
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
   ],
 
-  // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
   ],
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
+  router: {
+    routes: [
+      {
+        path: '/signup',
+        component: '~/pages/signup.vue'
+      }
+    ]
+  },
+
   build: {
   }
 }
