@@ -38,6 +38,10 @@ export default {
       {
         path: '/signup',
         component: '~/pages/signup.vue'
+      },
+      {
+        path: '/login',
+        component: '~/pages/login.vue'
       }
     ]
   },

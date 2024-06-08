@@ -11,10 +11,11 @@
         <b-form-input type="password" id="password-input" v-model="password" required placeholder="Entrez votre mot de passe" ></b-form-input>
       </b-form-group>
       <b-form-group label="Confirmation du mot de passe" label-for="confirm-password-input" :state="validateConfirmPassword">
-        <b-form-input type="password" id="confirm-password-input" v-model="confirmPassword" required placeholder="Confirmez votre mot de passe" @input="touched.confirmPassword = true"></b-form-input>
+        <b-form-input type="password" id="confirm-password-input" v-model="confirmPassword" required placeholder="Confirmez votre mot de passe"></b-form-input>
         <b-form-invalid-feedback :state="validateConfirmPassword">Mot de passe pas identique: Veuillez confirmer votre mot de passe.</b-form-invalid-feedback>
       </b-form-group>
       <b-button type="submit" variant="primary" block>Inscription</b-button>
+      <p class="mt-2 text-center">Vous avez déjà un compte ? <b-link @click="goToLogin" class="text-primary">Se Connecter</b-link></p>
     </b-form>
     <b-toast v-model="showErrorAlert" :auto-hide-delay="3000" no-fade>
       <div class="p-2 bg-danger text-light rounded d-flex justify-content-between">
@@ -43,10 +44,7 @@ export default {
       password: '',
       confirmPassword: '',
       showErrorAlert: false,
-      errorMessage: "",
-      touched: {
-        confirmPassword: false
-      }
+      errorMessage: ""
     };
   },
   computed: {
@@ -68,7 +66,7 @@ export default {
       try {
         const response = await AuthService.signup(this.username, this.email, this.password);
         if (response) {
-
+          this.$router.push('/login');
         }
       } catch (error) {
         this.errorMessage = error;
@@ -76,8 +74,8 @@ export default {
         console.error(error);
       }
     },
-    dismissErrorAlert() {
-      this.showErrorAlert = false;
+    goToLogin() {
+      this.$router.push('/login');
     }
   }
 };
