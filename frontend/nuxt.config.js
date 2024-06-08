@@ -21,6 +21,7 @@ export default {
   ],
 
   plugins: [
+    '~/environment/environment.js'
   ],
 
   components: true,
@@ -42,5 +43,6 @@ export default {
   },
 
   build: {
+    transpile: ['axios']
   }
 }
