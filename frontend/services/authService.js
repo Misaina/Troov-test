@@ -9,6 +9,15 @@ const AuthService = {
     } catch (error) {
       throw error.response.data.msg || 'Une erreur s\'est produite lors de l\'inscription.';
     }
+  },
+
+  async login(email, password) {
+    try {
+      const response = await axios.post(`${env.apiUrl}/api/auth/login`, { email, password });
+      return response.data;
+    } catch (error) {
+      throw error.response.data.msg || 'Une erreur s\'est produite lors de l\'inscription.';
+    }
   }
 };
 
