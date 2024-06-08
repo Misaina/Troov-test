@@ -67,7 +67,7 @@ const login = async (req, res) => {
         });
     } catch (error) {
         console.error(error.message);
-        res.status(500).send('Erreur du serveur');
+        res.status(500).send(`Server error: ${error.message}`);
     }
 };
 
