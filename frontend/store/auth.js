@@ -1,25 +1,39 @@
 import AuthService from "../services/authService";
 
-export const state = () => ({
-  token: null
-});
-
-export const mutations = {
-  SET_TOKEN(state, token) {
-    state.token = token;
-  }
+export const auth = {
+  namespaced: true,
+  state: {
+    token: null,
+  },
+  getters: {
+    token: state => state.token
+  },
+  mutations: {
+    SET_TOKEN(state, token) {
+      state.token = token;
+    },
+    CLEAR_AUTH(state) {
+      state.token = null;
+    },
+  },
+  actions: {
+    async login({ commit }, { email, password }) {
+      try {
+        const { token } = await AuthService.login(email, password);
+        if (token) {
+          localStorage.setItem('apiToken', token);
+          commit('SET_TOKEN', token);
+          return token;
+        } else {
+          throw new Error('Failed to login');
+        }
+      } catch (error) {
+        throw error;
+      }
+    },
+    logout({ commit }) {
+      commit('CLEAR_AUTH');
+    },
+  },
 };
 
-export const actions = {
-  async login({ commit }, userData) {
-    try {
-      const response = await AuthService.login(userData.email, userData.password);
-      commit('SET_TOKEN', response.token);
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  }
-};
-
-export const namespaced = true;

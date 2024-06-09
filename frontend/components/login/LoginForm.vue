@@ -51,7 +51,7 @@ export default {
     try {
       const response = await this.login({ email: this.email, password: this.password });
       if (response) {
-        this.$router.push('/accueil');
+        this.$router.push('/home');
       }
     } catch (error) {
       this.errorMessage = error;
