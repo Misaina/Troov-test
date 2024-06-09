@@ -1,5 +1,6 @@
 import axios from 'axios';
 import env from '../environment/environment';
+import { throwError } from '../utils/throwError';
 
 const AuthService = {
   async signup(username, email, password) {
@@ -7,7 +8,7 @@ const AuthService = {
       const response = await axios.post(`${env.apiUrl}/api/auth/signup`, { username, email, password });
       return response.data;
     } catch (error) {
-      throw error.response.data.msg || 'Une erreur s\'est produite lors de l\'inscription.';
+      throwError(error);
     }
   },
 
@@ -16,7 +17,7 @@ const AuthService = {
       const response = await axios.post(`${env.apiUrl}/api/auth/login`, { email, password });
       return response.data;
     } catch (error) {
-      throw error.response.data.msg || 'Une erreur s\'est produite lors de l\'inscription.';
+      throwError(error);
     }
   }
 };
