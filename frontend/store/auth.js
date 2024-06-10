@@ -1,4 +1,5 @@
 import AuthService from "../services/authService";
+import { isTokenExpired } from "../utils/tokenUtils";
 
 export const auth = {
   namespaced: true,
@@ -11,9 +12,11 @@ export const auth = {
   mutations: {
     SET_TOKEN(state, token) {
       state.token = token;
+      localStorage.setItem('apiToken', token);
     },
     CLEAR_AUTH(state) {
       state.token = null;
+      localStorage.removeItem('apiToken');
     },
   },
   actions: {
@@ -21,7 +24,6 @@ export const auth = {
       try {
         const { token } = await AuthService.login(email, password);
         if (token) {
-          localStorage.setItem('apiToken', token);
           commit('SET_TOKEN', token);
           return token;
         } else {
@@ -33,7 +35,7 @@ export const auth = {
     },
     logout({ commit }) {
       commit('CLEAR_AUTH');
-    },
+    }
   },
 };
 

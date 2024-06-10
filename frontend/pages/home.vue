@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center mb-4 mt-5">
+  <div class="text-center mb-4 mt-5" v-if="isLoggedIn">
     <b-button variant="success" @click="showAddModal" class="mb-5">Ajouter un objet</b-button>
     <ObjectList @edit-object="showEditModal"></ObjectList>
     <ObjectForm
@@ -15,6 +15,7 @@
 import ObjectList from '../components/home/ObjectList.vue';
 import ObjectForm from '../components/home/ObjectForm.vue';
 import { mapActions } from 'vuex';
+import { isTokenExpired } from '../utils/tokenUtils'
 
 export default {
   components: {
@@ -23,7 +24,8 @@ export default {
   },
   data() {
     return {
-      selectedObject: null
+      selectedObject: null,
+      isLoggedIn: false
     };
   },
   methods: {
@@ -38,7 +40,12 @@ export default {
     }
   },
   mounted() {
+    if (isTokenExpired()) {
+      this.$store.commit('auth/CLEAR_AUTH');
+      return this.$router.push('/login');
+    }
+    this.isLoggedIn = true;
     this.fetchObjects();
   }
-};
+}
 </script>
