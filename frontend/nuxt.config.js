@@ -34,19 +34,10 @@ export default {
   ],
 
   router: {
-    routes: [
-      {
-        path: '/signup',
-        component: '~/pages/signup.vue'
-      },
-      {
-        path: '/login',
-        component: '~/pages/login.vue'
-      }
-    ]
+    routes: []
   },
 
   build: {
     transpile: ['axios']
-  }
+  },
 }
