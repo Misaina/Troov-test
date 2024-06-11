@@ -1,5 +1,4 @@
 import AuthService from "../services/authService";
-import { isTokenExpired } from "../utils/tokenUtils";
 
 export const auth = {
   namespaced: true,
