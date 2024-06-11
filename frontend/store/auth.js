@@ -22,10 +22,10 @@ export const auth = {
   actions: {
     async login({ commit }, { email, password }) {
       try {
-        const { token } = await AuthService.login(email, password);
-        if (token) {
-          commit('SET_TOKEN', token);
-          return token;
+        const data = await AuthService.login(email, password);
+        if (data && data.token) {
+          commit('SET_TOKEN', data.token);
+          return data.token;
         } else {
           throw new Error('Failed to login');
         }
