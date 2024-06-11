@@ -4,17 +4,33 @@
       <b-table striped hover :items="objects" :fields="fields">
         <template #cell(actions)="data">
           <b-button size="sm" variant="primary" @click="editObject(data.item)">Modifier</b-button>
-          <b-button size="sm" variant="danger" @click="deleteObject(data.item._id)">Supprimer</b-button>
+          <b-button size="sm" variant="danger" @click="confirmDelete(data.item)">Supprimer</b-button>
         </template>
       </b-table>
     </div>
+    <b-modal ref="deleteModal" @ok="performDelete">
+      <template #modal-title>
+        Confirmation de suppression
+      </template>
+      Êtes-vous sûr de vouloir supprimer cet objet nommé " {{ currentItemToDelete.name }} " ?
+    </b-modal>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
+const INITIAL_VALUE = {
+  _id: null,
+  name: null,
+  description: null
+}
 
 export default {
+  data() {
+    return {
+      currentItemToDelete: INITIAL_VALUE
+    };
+  },
   computed: {
     ...mapState('objects', ['objects']),
     fields() {
@@ -29,6 +45,16 @@ export default {
     ...mapActions('objects', ['deleteObject']),
     editObject(object) {
       this.$emit('edit-object', object);
+    },
+    confirmDelete(item) {
+      this.currentItemToDelete = item;
+      this.$refs.deleteModal.show();
+    },
+    performDelete() {
+      if (this.currentItemToDelete._id) {
+        this.deleteObject(this.currentItemToDelete._id);
+        this.currentItemToDelete = INITIAL_VALUE;
+      }
     }
   }
 };
