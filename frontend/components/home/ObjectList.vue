@@ -8,27 +8,31 @@
         </template>
       </b-table>
     </div>
-    <b-modal ref="deleteModal" @ok="performDelete">
-      <template #modal-title>
-        Confirmation de suppression
-      </template>
-      Êtes-vous sûr de vouloir supprimer cet objet nommé " {{ currentItemToDelete.name }} " ?
-    </b-modal>
+    <ConfirmDeleteModal
+      ref="deleteModal"
+      :itemName="currentItemToDelete.name"
+      @confirm-delete="performDelete"
+    />
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import ConfirmDeleteModal from '../modals/ConfirmDeleteModal.vue';
+
 const INITIAL_VALUE = {
   _id: null,
   name: null,
   description: null
-}
+};
 
 export default {
+  components: {
+    ConfirmDeleteModal
+  },
   data() {
     return {
-      currentItemToDelete: INITIAL_VALUE
+      currentItemToDelete: { ...INITIAL_VALUE }
     };
   },
   computed: {
@@ -53,7 +57,7 @@ export default {
     performDelete() {
       if (this.currentItemToDelete._id) {
         this.deleteObject(this.currentItemToDelete._id);
-        this.currentItemToDelete = INITIAL_VALUE;
+        this.currentItemToDelete = { ...INITIAL_VALUE };
       }
     }
   }
