@@ -11,7 +11,7 @@
 export default {
   props: {
     itemName: {
-      type: String,
+      type: String | null,
       required: true
     }
   },
